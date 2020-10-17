@@ -1,7 +1,6 @@
-version: '3'
+version: "3"
 
 services:
-
   php:
     build:
       context: .
@@ -39,10 +38,27 @@ services:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_USER: root
     volumes:
       - ./docker/db/data:/var/lib/mysql
     networks:
+      - app-network
+  redis:
+    image: redis:5.0
+    build: 
+      context: .
+      dockerfile: ./docker/redis/Dockerfile
+    container_name: redis
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./docker/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./docker/redis/data:/var/lib/redis
+      networks:
       - app-network
 
 networks:
