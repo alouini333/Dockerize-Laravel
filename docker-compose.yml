@@ -52,6 +52,8 @@ services:
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
+    volumes:
+      - ./docker/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - app-network
 
