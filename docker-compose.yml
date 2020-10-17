@@ -60,6 +60,19 @@ services:
       - ./docker/redis/data:/var/lib/redis
       networks:
       - app-network
+  mailhog:
+    build:
+      context: .
+      dockerfile: ./docker/mailhog/Dockerfile
+    image: mailhog/mailhog:1.0.1
+    container_name: mailhog
+    tty: true
+    restart: unless-stopped
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    networks:
+      - app-network
 
 networks:
   app-network:
