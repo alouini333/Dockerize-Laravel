@@ -46,6 +46,9 @@ services:
       - app-network
   redis:
     image: redis:5.0
+    build: 
+      context: .
+      dockerfile: ./docker/redis/Dockerfile
     container_name: redis
     ports:
       - "6379:6379"
@@ -54,7 +57,8 @@ services:
       REDIS_PORT: 6379
     volumes:
       - ./docker/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
-    networks:
+      - ./docker/redis/data:/var/lib/redis
+      networks:
       - app-network
 
 networks:
